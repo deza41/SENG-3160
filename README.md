@@ -8,8 +8,13 @@ This project was only a prototype but showcased what was to be expected.
 
 Contributions:
 
-Tyrone Deza.
-William scobell.
-Rhys Ogle.
-Simon Janmaat.
-Blake Spiers.
+Tyrone Deza
+
+William scobell
+
+Rhys Ogle
+
+Simon Janmaat
+
+Blake Spiers
+
