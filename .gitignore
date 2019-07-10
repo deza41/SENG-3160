@@ -1,0 +1,44 @@
+# Configuration & Compilation #
+###############################
+/.idea/
+/target/
+/src/main/webapp/META-INF/
+Prototype.iml
+/src/main/java/NewcastleConnectionsPrototype/Group4/models/db/
+
+
+# Everything below here I just grabbed from common gitignore place - if there's anything we actually need just remove it #
+##########################################################################################################################
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Images #
+##########
+*.jpg
+*.gif
+*.png
+*.svg
+*.ico
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+src/main/java/NewcastleConnectionsPrototype/Group4/actions/user/DisplayUserAccountAction.java___jb_tmp___

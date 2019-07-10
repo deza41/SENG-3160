@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+                "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+                "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+<constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+<constant name="struts.devMode" value="true" />
+<constant name="struts.custom.i18n.resources" value="global" />
+<constant name="struts.ui.theme" value="simple"/>
+<constant name="struts.mapper.action.prefix.enabled" value="true" />
+<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+
+<package name="myPackage" extends="struts-default">
+    <interceptors>
+        <!-- In order to use the interceptor, we have to first define it. -->
+        <interceptor name="RequiresDBConnection" class="NewcastleConnectionsPrototype.Group4.interceptors.DBInterceptor" />
+        <interceptor name="checkLogin" class="NewcastleConnectionsPrototype.Group4.interceptors.CheckLogedInIntercepter"/>
+        <!-- Interceptors can be arranged into stacks, making it easier to apply sets of interceptors to actions -->
+        <interceptor-stack name="RequiresDBConnectionStack">
+            <!-- An interceptor stack can contain other interceptor stacks -->
+            <interceptor-ref name="defaultStack" />
+            <!-- And interceptor references -->
+            <interceptor-ref name="RequiresDBConnection" />
+        </interceptor-stack>
+        <interceptor-stack name="checkLoginStack">
+            <interceptor-ref name="params"/>
+            <interceptor-ref name="checkLogin"/>
+        </interceptor-stack>
+
+
+    </interceptors>
+    <!-- An entire package can have a default interceptor (or stack) set. This makes it easier than specifying an interceptor/stack on every action -->
+    <default-interceptor-ref name="RequiresDBConnectionStack" />
+
+    <action name="testDbConn" class="NewcastleConnectionsPrototype.Group4.actions.RequiresDbConnectionMockAction">
+        <result>/</result>
+    </action>
+
+    <action name="testCheckLoggedIn" class="NewcastleConnectionsPrototype.Group4.actions.CheckLoggedInInterceptorMockAction">
+        <interceptor-ref name="checkLogin">
+            <param name="allowedRoles">business</param>
+            <param name="disallowedRoles">admin, user</param>
+        </interceptor-ref>
+        <result name="success">/</result>
+        <result name="error">/</result>
+    </action>
+
+    <action name="testCheckLoggedIn2" class="NewcastleConnectionsPrototype.Group4.actions.CheckLoggedInInterceptorMockAction">
+        <interceptor-ref name="checkLogin">
+            <param name="allowedRoles"></param>
+            <param name="disallowedRoles"></param>
+        </interceptor-ref>
+        <result name="success">/</result>
+        <result name="error">/</result>
+    </action>
+
+    <action name="testCheckLoggedIn3" class="NewcastleConnectionsPrototype.Group4.actions.CheckLoggedInInterceptorMockAction">
+        <interceptor-ref name="checkLogin">
+            <param name="allowedRoles">user</param>
+            <param name="disallowedRoles"></param>
+        </interceptor-ref>
+        <result name="success">/</result>
+        <result name="error">/</result>
+    </action>
+
+</package>
+</struts>

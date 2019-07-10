@@ -1,0 +1,204 @@
+/* itinerary page */
+/* let this messge stand as a reminder of the time I messed up a merge and got annoyed */
+
+
+#itinerary-wrapper {
+    background: lightgrey;
+    border-radius: 8px;
+}
+
+/* Draggable itinerary item's and home area*/
+#itinerary-items-store {
+    margin-top:10px;
+}
+
+.itinerary-item-expanded {
+    z-index: 5 !important;
+}
+
+.itinerary-item {
+    /*border: 1px solid rgba(0,0,0,.125);*/
+    border : 0;
+    z-index: 1;
+    width: 100%;
+    background: lightblue;
+    color: black;
+    box-shadow: 2px 2px;
+}
+
+.itinerary-item-expand > input {
+    width: 30%;
+    float: right;
+}
+
+
+.itinerary-item > .ui-resizable-se {
+    background-position: -64px 0px;
+    cursor: s-resize;
+}
+
+.itinerary-item-buttons-wrapper {
+    position: absolute;
+    right: 0;
+    margin: 3px;
+}
+
+.itinerary-item-buttons-wrapper > .itinerary-item-close-button {
+    padding: .1rem 0.4rem;
+}
+
+.itinerary-item-buttons-wrapper > .itinerary-item-expand-button {
+    padding: .1rem 0.4rem;
+}
+
+.itinerary-item > .card-block {
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+    height: 50px;
+    max-height: 50px;
+    margin-bottom: 24px;
+}
+
+.itinerary-card-block-p {
+    font-size: 0.75rem;
+    margin: 0;
+    padding: 0;
+
+}
+
+.ui-draggable-dragging {
+    z-index: 2;
+    background: lightblue;
+    opacity: 0.3;
+}
+
+.itinerary-item-placed {
+    position:absolute !important;
+}
+
+.itinerary-item-not-placed {
+    margin-bottom: 10px;
+}
+
+.itinerary-item > .itinerary-item-expand {
+    display: none;
+    background: beige;
+    padding: 10px;
+}
+
+/* Event Items */
+.event-item {
+    background-color: beige;
+    z-index: 2;
+    position: absolute;
+    box-shadow: 2px 2px;
+}
+
+.event-item-title {
+    transform: scale(-1);
+    writing-mode: vertical-lr;
+    position:absolute;
+    right: 0;
+    left: 0;
+    bottom: 50%;
+    padding-top: 5px;
+    overflow: hidden;
+    color: black;
+    font-size: 1.25rem;
+    margin-right: 5px;
+}
+
+.event-item-expand-button {
+    padding: .1rem 0.4rem;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.event-item-expand {
+    background: beige;
+    margin-left: 16px;
+    width: 250px;
+    padding: 5px;
+    border: solid black 1px;
+    display: none;
+}
+
+/* Target droppable itinerary area */
+
+#daySlider {
+    width: 100%;
+}
+
+.itinerary-target-area {
+    height: 800px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.itinerary-droppable-slot {
+    width: 100%;
+    min-height: 50px;
+    position: relative;
+    background: white;
+    color: black;
+    border : none;
+    /*border: dashed;
+    border-width: 1px 0 0 0; */
+    padding-left: 38px;
+}
+
+.itinerary-droppable-slot-first {
+    background: #EFEFEF;
+}
+
+.itinerary-interval-text {
+    left: 0;
+    color: #949494;
+    font-size: 1rem;
+    position: absolute;
+    line-height: 1.1rem;
+
+}
+
+.itinerary-day-column {
+    padding: 0;
+    margin: 0 5px 0 5px;
+    background: white;
+}
+
+.itinerary-hourly-wrapper {
+    background: #F3F3EE;
+    z-index: 2;
+}
+
+.ui-droppable-hover {
+    opacity: 0.4;
+    background: black;
+}
+
+.alert-popup {
+    left: auto;
+    top: 65px;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}

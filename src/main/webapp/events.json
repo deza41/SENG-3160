@@ -1,0 +1,27 @@
+{
+  "monthly": [
+    {
+      "id": 1,
+      "name": "This is a JSON event",
+      "startdate": "2017-8-15",
+      "enddate": "2017-8-18",
+      "starttime": "12:00",
+      "endtime": "2:00",
+      "color": "#FFB128",
+      "url": ""
+    },
+    {
+      "id": 2,
+      "name": "This is a JSON event",
+      "startdate": "2017-8-15",
+      "enddate": "",
+      "starttime": "12:00",
+      "endtime": "2:00",
+      "color": "#EF44EF",
+      "url": ""
+    }
+  ]
+}
+
+
+[{"enddate":"2017-06-13","color":"#EF44EF","name":"The Best event of all days","endtime":"","id":1,"starttime":"","startdate":"2017-06-10","url":""},{"enddate":"2017-06-13","color":"#EF44EF","name":"The Best event of all days","endtime":"","id":1,"starttime":"","startdate":"2017-06-10","url":""},{"enddate":"2017-06-13","color":"#EF44EF","name":"The Best event of all days","endtime":"","id":1,"starttime":"","startdate":"2017-06-10","url":""}]

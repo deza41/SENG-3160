@@ -1,0 +1,110 @@
+
+/* search results page */
+body {
+    background: #F5F5F5;
+}
+
+.search-result {
+    margin: 10px 0 10px 0;
+    box-shadow: 0 1px 4px rgba(41,51,57,.5);
+    border-radius: unset;
+}
+
+.search-result-deal {
+
+}
+
+.search-result > .card-footer {
+    background: none;
+    border: none;
+}
+
+.search-result-content {
+    padding: 8px;
+}
+
+.search-result > .search-result-expand-area {
+    display: none;
+}
+
+.stars-container {
+    position: relative;
+    display: inline-block;
+    color: transparent;
+    width: 93px;
+    height: 22px;
+}
+
+.stars-container:before {
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: lightgray;
+}
+
+.stars-container:after {
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '\f005 \f005 \f005 \f005 \f005';
+    color: gold;
+    overflow: hidden;
+}
+
+.stars-0:after { width: 0%; }
+.stars-10:after { width: 10%; }
+.stars-20:after { width: 20%; }
+.stars-30:after { width: 30%; }
+.stars-40:after { width: 40%; }
+.stars-50:after { width: 50%; }
+.stars-60:after { width: 60%; }
+.stars-70:after { width: 70%; }
+.stars-80:after { width: 80%; }
+.stars-90:after { width: 90%; }
+.stars-100:after { width: 100%; }
+
+.businessImage{
+    max-width: 100%;
+}
+
+
+/* Deal cards */
+.event-card {
+    box-shadow: 3px 3px 7px rgba(41,51,57,.5);
+    border: none;
+    height: 550px;
+}
+
+.event-deal-card-footer {
+    background: none;
+}
+
+.event-corner-tab {
+    position: absolute;
+    right: 0px;
+    top: 20px;
+    background: #c84a31;;
+    padding: 10px;
+    color: white;
+}
+
+.event-card-img {
+    width: 100%;
+}
+
+.event-card-text {
+    text-overflow: ellipsis;
+    height: 50px;
+    overflow: hidden;
+}
+
+.search-like-business {
+    z-index: 1;
+    font-size: 2rem;
+    position: absolute;
+    right: 10px;
+    top: 0;
+}

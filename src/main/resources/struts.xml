@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.custom.i18n.resources" value="global" />
+    <constant name="struts.ui.theme" value="simple"/>
+    <constant name="struts.mapper.action.prefix.enabled" value="true" />
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+
+    <package name="myPackage" extends="json-default">
+        <interceptors>
+            <!-- In order to use the interceptor, we have to first define it. -->
+            <interceptor name="RequiresDBConnection" class="NewcastleConnectionsPrototype.Group4.interceptors.DBInterceptor" />
+            <interceptor name="checkLogin" class="NewcastleConnectionsPrototype.Group4.interceptors.CheckLogedInIntercepter"/>
+            <!-- Interceptors can be arranged into stacks, making it easier to apply sets of interceptors to actions -->
+            <interceptor-stack name="RequiresDBConnectionStack">
+                <!-- An interceptor stack can contain other interceptor stacks -->
+                <interceptor-ref name="defaultStack" />
+                <!-- And interceptor references -->
+                <interceptor-ref name="RequiresDBConnection" />
+            </interceptor-stack>
+
+            <interceptor-stack name="checkLoginStack">
+                <interceptor-ref name="params"/>
+                <interceptor-ref name="checkLogin"/>
+            </interceptor-stack>
+            <!-- JSON interceptor - used mainly on itinerary page -->
+            <interceptor-stack name="jsonStack">
+                <interceptor-ref name="json">
+                    <param name="enableSMD">true</param>
+                </interceptor-ref>
+            </interceptor-stack>
+
+            <interceptor-stack name="dbJsonStack">
+                <interceptor-ref name="jsonStack"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="RequiresDBConnection"/>
+            </interceptor-stack>
+
+            <interceptor-stack name="eventJsonStack">
+                <interceptor-ref name="jsonStack"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="RequiresDBConnection"/>
+            </interceptor-stack>
+
+        </interceptors>
+        <!-- An entire package can have a default interceptor (or stack) set. This makes it easier than specifying an interceptor/stack on every action -->
+        <default-interceptor-ref name="RequiresDBConnectionStack" />
+
+        <default-action-ref name="home" />
+
+        <action name="home" class="NewcastleConnectionsPrototype.Group4.actions.HomeAction">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+            <result name="business">/WEB-INF/jsp/pages/home/BusinessHome.jsp</result>
+        </action>
+
+        <action name="login" class="NewcastleConnectionsPrototype.Group4.actions.user.LoginAction">
+            <result name="success" type="redirectAction"><param name="actionName">generateUserNotifications</param>generateUserNotifications</result>
+            <result name="business">/WEB-INF/jsp/pages/home/BusinessHome.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/errors/LoginError.jsp</result>
+
+        </action>
+
+        <action name="logout" class="NewcastleConnectionsPrototype.Group4.actions.user.LoginAction" method="logout">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+        </action>
+
+        <action name="createNewUser" class="NewcastleConnectionsPrototype.Group4.actions.TestAction">
+            <result name="success">/WEB-INF/jsp/pages/user/CreateUserAccount.jsp</result>
+        </action>
+
+        <action name="register" class="NewcastleConnectionsPrototype.Group4.actions.user.RegisterAction">
+            <result name="success">/WEB-INF/jsp/pages/user/SuccessfulUserCreation.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/UserErrorPage.jsp</result>
+        </action>
+
+        <action name="itinerarySave" class="NewcastleConnectionsPrototype.Group4.actions.orders.ItinerarySaveAction">
+            <interceptor-ref name="jsonStack"></interceptor-ref>
+            <result type="json" />
+        </action>
+
+        <action name="itinerary" class="NewcastleConnectionsPrototype.Group4.actions.orders.ItineraryAction">
+            <result name="success">/WEB-INF/jsp/pages/cart/Itinerary.jsp</result>
+        </action>
+
+        <action name="shoppingCart" class="NewcastleConnectionsPrototype.Group4.actions.cart.ShoppingCartAction">
+            <result name="success">/WEB-INF/jsp/pages/cart/ShoppingCart.jsp</result>
+        </action>
+
+        <action name="buildPackage" class="NewcastleConnectionsPrototype.Group4.actions.search.BuildPackageAction">
+            <result name="success" type="redirectAction"><param name="actionName">searchEvent</param></result>
+        </action>
+
+        <action name="search" class="NewcastleConnectionsPrototype.Group4.actions.search.SearchDealsAction">
+            <result name="success">/WEB-INF/jsp/pages/search/Search.jsp</result>
+        </action>
+
+        <action name="searchEvent" class="NewcastleConnectionsPrototype.Group4.actions.search.SearchEventsAction">
+            <result name="success">/WEB-INF/jsp/pages/search/SearchEvents.jsp</result>
+        </action>
+
+        <action name="createDeal" class="NewcastleConnectionsPrototype.Group4.actions.deal.CreateDealAction">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="modifyDeal" class="NewcastleConnectionsPrototype.Group4.actions.deal.DealModifiedAction">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="editDeal" class="NewcastleConnectionsPrototype.Group4.actions.deal.EditDealAction">
+            <result name="success">/WEB-INF/jsp/pages/deal/EditDeal.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="discontinueDeal" class="NewcastleConnectionsPrototype.Group4.actions.deal.DiscontinueDealAction">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="viewDeals" class="NewcastleConnectionsPrototype.Group4.actions.deal.ViewDealsAction">
+            <result name="success">/WEB-INF/jsp/pages/deal/ViewDeals.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="viewDealInformation" class="NewcastleConnectionsPrototype.Group4.actions.deal.ViewDealInformationAction">
+            <result name="success">/WEB-INF/jsp/pages/deal/ViewDealInformation.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="trackYourOrder" class="NewcastleConnectionsPrototype.Group4.actions.orders.TrackYourOrderAction">
+            <result name="success">/WEB-INF/jsp/pages/orders/TrackYourOrder.jsp</result>
+
+            <result name="error"></result>
+        </action>
+
+        <action name="navToTrackOrder" class="NewcastleConnectionsPrototype.Group4.actions.orders.TrackYourOrderAction" method="navigate">
+            <result name="success">/WEB-INF/jsp/pages/orders/TrackYourOrderNav.jsp</result>
+            <result name="loggedin" type="redirectAction"><param name="actionName">trackYourOrder</param></result>
+            <result name="trackingID" type="redirectAction"><param name="actionName">trackYourOrder</param></result>
+
+        </action>
+
+        <action name="Tlogin" class="NewcastleConnectionsPrototype.Group4.actions.user.LoginAction">
+            <result name="success" type="redirectAction"><param name="actionName">trackYourOrder</param></result>
+            <result name="business" >/WEB-INF/jsp/pages/home/BusinessHome.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="checkOut" class="NewcastleConnectionsPrototype.Group4.actions.cart.ShoppingCartAction" method="checkOutNav">
+            <result name="success">/WEB-INF/jsp/pages/cart/GuestCheckoutForm.jsp</result>
+            <result name="loggedin">/WEB-INF/jsp/pages/cart/CheckOut.jsp</result>
+            <result name="guestformvalid">/WEB-INF/jsp/pages/cart/CheckOut.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="Clogin" class="NewcastleConnectionsPrototype.Group4.actions.user.LoginAction">
+            <result name="user">/WEB-INF/jsp/pages/cart/CheckOut.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="manageOrder" class="NewcastleConnectionsPrototype.Group4.actions.orders.ManageOrdersAction">
+            <result name="success">/WEB-INF/jsp/pages/orders/ManageOrder.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="manageReview" class="NewcastleConnectionsPrototype.Group4.actions.review.ViewReviewsAction">
+            <result name="success">/WEB-INF/jsp/pages/review/ViewReviewsForBusiness.jsp</result>
+            <result name="error"></result>
+        </action>
+        
+        <action name="viewStatistics" class="NewcastleConnectionsPrototype.Group4.actions.statistics.ViewStatisticsAction">
+            <result name="success">/WEB-INF/jsp/pages/statistics/Statistics.jsp</result>
+
+        </action>
+
+        <action name="createNewDeal" class="NewcastleConnectionsPrototype.Group4.actions.TestAction">
+            <interceptor-ref name="checkLogin">
+                <param name="allowedRoles">admin, business</param>
+                <param name="disallowedRoles>">user</param>
+            </interceptor-ref>
+            <result name="success">/WEB-INF/jsp/pages/deal/CreateDeal.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/home/Home.jsp</result>
+        </action>
+
+        <action name="createNewEvent" class="NewcastleConnectionsPrototype.Group4.actions.TestAction">
+            <result name="success">/WEB-INF/jsp/pages/events/CreateEvent.jsp</result>
+        </action>
+
+        <action name="createEvent" class="NewcastleConnectionsPrototype.Group4.actions.event.CreateEventAction">
+            <result name="success" type="redirectAction"><param name="actionName">home</param></result>
+            <result name="error"></result>
+        </action>
+
+        <action name="createEventSaveTimes" class="NewcastleConnectionsPrototype.Group4.actions.event.CreateEventAction" method="jsonMethod">
+            <interceptor-ref name="jsonStack"></interceptor-ref>
+            <result type="json" />
+        </action>
+
+        <action name="modifyEvent" class="NewcastleConnectionsPrototype.Group4.actions.event.EventModifiedAction">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="editEvent" class="NewcastleConnectionsPrototype.Group4.actions.event.EditEventAction">
+            <result name="success">/WEB-INF/jsp/pages/events/EditEvent.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="discontinueEvent" class="NewcastleConnectionsPrototype.Group4.actions.event.DiscontinueEventAction">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="viewEvents" class="NewcastleConnectionsPrototype.Group4.actions.event.ViewEventsAction">
+            <result name="success">/WEB-INF/jsp/pages/events/ViewEvents.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="viewEventInformation" class="NewcastleConnectionsPrototype.Group4.actions.event.ViewEventInformationAction">
+            <result name="success">/WEB-INF/jsp/pages/events/ViewEventInformation.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="likeBusiness" class="NewcastleConnectionsPrototype.Group4.actions.search.LikeBusinessAction">
+            <interceptor-ref name="dbJsonStack"></interceptor-ref>
+            <result type="json" />
+        </action>
+
+
+
+        <!-- User Management Actions -->
+
+        <action name="DisplayBusinessAccount" class="NewcastleConnectionsPrototype.Group4.actions.user.DisplayBusinessAccountAction">
+            <result name="success">/WEB-INF/jsp/pages/user/DisplayBusiness.jsp</result>
+        </action>
+
+        <action name="DisplayChoice" class="NewcastleConnectionsPrototype.Group4.actions.TestAction">
+            <result name="success">/WEB-INF/jsp/pages/user/DisplayChoice.jsp</result>
+        </action>
+
+        <action name="ChoiceUserOrBusiness" class="NewcastleConnectionsPrototype.Group4.actions.TestAction">
+            <interceptor-ref name="checkLogin">
+                <param name="allowedRoles"></param>
+                <param name="disallowedRoles">admin, business, user</param>
+            </interceptor-ref>
+            <result name="success">/WEB-INF/jsp/pages/user/RegisterUser.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/AlreadyLoggedIn.jsp</result>
+        </action>
+
+        <action name="choiceUser" class="NewcastleConnectionsPrototype.Group4.actions.user.BusinessOrUserAction">
+            <interceptor-ref name="checkLogin">
+                <param name="allowedRoles"></param>
+                <param name="disallowedRoles">admin, business, user</param>
+            </interceptor-ref>
+            <result name="success">/WEB-INF/jsp/pages/user/CreateUserAccount.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/AlreadyLoggedIn.jsp</result>
+        </action>
+
+        <action name="choiceBusiness" class="NewcastleConnectionsPrototype.Group4.actions.user.BusinessOrUserAction">
+            <interceptor-ref name="checkLogin">
+                <param name="allowedRoles"></param>
+                <param name="disallowedRoles">admin, business, user</param>
+            </interceptor-ref>
+            <result name="success">/WEB-INF/jsp/pages/user/CreateBusinessUser.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/AlreadyLoggedIn.jsp</result>
+        </action>
+
+        <action name="createUser" class="NewcastleConnectionsPrototype.Group4.actions.user.RegisterAction">
+
+            <result name="success">/WEB-INF/jsp/pages/user/CreateSuccess.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/CreateError.jsp</result>
+        </action>
+
+        <action name="createBusinessUser" class="NewcastleConnectionsPrototype.Group4.actions.user.CreateBusinessAccountAction">
+            <result name="success">/WEB-INF/jsp/pages/user/CreateSuccess.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/CreateError.jsp</result>
+        </action>
+
+        <!--display the edit user form -->
+        <action name="DisplayEditUser" class="NewcastleConnectionsPrototype.Group4.actions.user.DisplayOneUserAccount">
+            <result name="success">/WEB-INF/jsp/pages/user/EditAccount.jsp</result>
+        </action>
+
+        <!--display the edit business form -->
+        <action name="DisplayEditBusiness" class="NewcastleConnectionsPrototype.Group4.actions.user.DisplayOneBusinessAccount">
+            <result name="success">/WEB-INF/jsp/pages/user/EditBusinessAccount.jsp</result>
+        </action>
+
+        <!--edits the user -->
+        <action name="editUser" class="NewcastleConnectionsPrototype.Group4.actions.user.EditAccountAction">
+            <result name="success">/WEB-INF/jsp/pages/user/success.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/CreateError.jsp</result>
+        </action>
+
+        <action name="editBusinessUser" class="NewcastleConnectionsPrototype.Group4.actions.user.EditBusinessAccountAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="RequiresDBConnectionStack"></interceptor-ref>
+            <result name="success">/WEB-INF/jsp/pages/user/success.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/CreateError.jsp</result>
+        </action>
+
+        <!--edits the user (if changed breaks) -->
+        <action name="userImage"
+                class="NewcastleConnectionsPrototype.Group4.actions.user.EditAccountAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="RequiresDBConnectionStack"></interceptor-ref>
+            <result name="success">/WEB-INF/jsp/pages/user/success.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/CreateError.jsp</result>
+            <result name="input">/WEB-INF/jsp/pages/UserImage.jsp</result>
+        </action>
+
+
+        <!--Multiple file upload -->
+        <action name="MultipleTest" class="NewcastleConnectionsPrototype.Group4.actions.TestAction">
+            <result name="success">/WEB-INF/jsp/pages/user/UploadMultipleFiles.jsp</result>
+        </action>
+
+
+        <!--Test actions -->
+
+        <action name="testEdit" class="NewcastleConnectionsPrototype.Group4.actions.TestAction">
+
+            <result name="success">/WEB-INF/jsp/pages/user/EditBusinessAccount.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/result.jsp</result>
+        </action>
+
+        <action name="Success" class="NewcastleConnectionsPrototype.Group4.actions.user.RegisterAction">
+            <result name="success">/WEB-INF/jsp/pages/user/success.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="editBusinessAccount" class="NewcastleConnectionsPrototype.Group4.actions.user.EditBusinessAccountAction">
+            <result name="success">/WEB-INF/jsp/pages/user/success.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/result.jsp</result>
+        </action>
+
+        <action name="TestUpload" class="NewcastleConnectionsPrototype.Group4.actions.TestAction">
+            <result name="success">/WEB-INF/jsp/pages/user/fileupload.jsp</result>
+            <result name="error">/WEB-INF/jsp/pages/user/result.jsp</result>
+        </action>
+
+        <action name="addDealToCart" class="NewcastleConnectionsPrototype.Group4.actions.cart.AddDealToCartAction">
+            <result type="json"/>
+        </action>
+
+        <action name="removeDealFromCart" class="NewcastleConnectionsPrototype.Group4.actions.cart.RemoveDealFromCartAction">
+            <result name="success">/WEB-INF/jsp/pages/cart/ShoppingCart.jsp</result>
+        </action>
+
+        <action name="addEventToCart" class="NewcastleConnectionsPrototype.Group4.actions.cart.AddEventToCartAction">
+            <result type="json"/>
+        </action>
+
+        <action name="removeEventFromCart" class="NewcastleConnectionsPrototype.Group4.actions.cart.RemoveEventFromCartAction">
+            <result name="success">/WEB-INF/jsp/pages/cart/ShoppingCart.jsp</result>
+        </action>
+
+        <action name="removeBookingFromCart" class="NewcastleConnectionsPrototype.Group4.actions.cart.RemoveBookingFromCartAction">
+            <result name="success">/WEB-INF/jsp/pages/cart/ShoppingCart.jsp</result>
+        </action>
+
+        <action name="addReview" class="NewcastleConnectionsPrototype.Group4.actions.review.AddReviewAction">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+            <result name="error"></result>
+        </action>
+
+        <action name="declineBooking" class="NewcastleConnectionsPrototype.Group4.actions.orders.ManageBookingsAction" method="decline">
+        <result name="success" type="redirectAction"><param name="actionName">manageOrder</param></result>
+        </action>
+
+        <action name="acceptBooking" class="NewcastleConnectionsPrototype.Group4.actions.orders.ManageBookingsAction" method="accept">
+            <result name="success" type="redirectAction"><param name="actionName">manageOrder</param></result>
+        </action>
+
+        <action name="payment" class="NewcastleConnectionsPrototype.Group4.actions.orders.BookPackageAction">
+            <result name="success"> /WEB-INF/jsp/pages/cart/PaymentSuccess.jsp</result>
+        </action>
+
+
+        <action name="generateUserNotifications" class="NewcastleConnectionsPrototype.Group4.actions.notifications.NotificationsAction">
+            <result name="success">/WEB-INF/jsp/pages/home/Home.jsp</result>
+        </action>
+
+        <action name="navToListOfNotifications" class="NewcastleConnectionsPrototype.Group4.actions.notifications.NotificationsAction" method="navNotifications">
+            <result name="success">/WEB-INF/jsp/pages/notifications/ViewAllNotifications.jsp</result>
+        </action>
+
+
+
+
+    </package>
+</struts>

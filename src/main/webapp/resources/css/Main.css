@@ -1,0 +1,61 @@
+.alert-popup {
+    position: absolute;
+    z-index: 999;
+    left: 25%;
+    max-width: 125px;
+}
+
+.alert-popup > .card-block {
+    padding: 1rem;
+}
+
+#page-base-container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.login-dropdown-box{
+    top: 30px
+}
+
+.newcon-nav {
+    box-shadow: 0 0 1em rgba(0,0,0,.8);
+}
+
+.navbar-nav > .active {
+    font-weight: 500;
+}
+
+.nav-item > .dropdown-menu {
+    top: 40px;
+}
+
+.nav-item > .nav-link {
+    border-right: 1px solid lightgray;
+}
+.nav-item:first-of-type > .nav-link {
+    border-left: 1px solid lightgray;
+}
+
+.dropdown-header {
+
+}
+
+
+.deal-price-old {
+    text-decoration: line-through;
+}
+
+
+.section-header {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+#footer {
+}
+
+
+#scroll-top {
+    font-size: 2rem;
+}
